@@ -65,7 +65,8 @@ async def show_what_python(call: types.CallbackQuery, state: FSMContext):
 # While Loop
 @dp.callback_query_handler(ChatTypeFilter(types.ChatType.PRIVATE), text=CONTENT_WHILE_LOOP, state='*')
 async def show_what_python(call: types.CallbackQuery, state: FSMContext):
-    await show_question(CONTENT_WHILE_LOOP_PHOTO, CONTENT_WHILE_LOOP, CONTENT_WHILE_lOOP_FIRST, call.message)
+    await show_question(CONTENT_WHILE_LOOP_PHOTO, CONTENT_WHILE_LOOP, CONTENT_WHILE_lOOP_FIRST, call.message,
+                        second_part=False)
 
 
 # Functions
@@ -79,39 +80,48 @@ async def show_what_python(call: types.CallbackQuery, state: FSMContext):
 async def show_next(call: types.CallbackQuery, state: FSMContext):
     photo_caption = call.message.caption
     if photo_caption.startswith(CONTENT_WHAT_PYTHON):
-        await call.message.edit_caption(caption=CONTENT_WHAT_PYTHON_SECOND, reply_markup=content_kb.back_menu_keyboard)
+        await call.message.edit_caption(caption=CONTENT_WHAT_PYTHON_SECOND, reply_markup=content_kb.back_menu_keyboard,
+                                        parse_mode=ParseMode.MARKDOWN)
     elif photo_caption.startswith(CONTENT_WHY_PYTHON):
-        await call.message.edit_caption(caption=CONTENT_WHY_PYTHON_SECOND, reply_markup=content_kb.back_menu_keyboard)
+        await call.message.edit_caption(caption=CONTENT_WHY_PYTHON_SECOND, reply_markup=content_kb.back_menu_keyboard,
+                                        parse_mode=ParseMode.MARKDOWN)
     elif photo_caption.startswith(CONTENT_INVENTOR):
-        await call.message.edit_caption(caption=CONTENT_INVENTOR_SECOND, reply_markup=content_kb.back_menu_keyboard)
+        await call.message.edit_caption(caption=CONTENT_INVENTOR_SECOND, reply_markup=content_kb.back_menu_keyboard,
+                                        parse_mode=ParseMode.MARKDOWN)
     elif photo_caption.startswith(CONTENT_FUNCTIONS):
-        await call.message.edit_caption(caption=CONTENT_FUNCTIONS_SECOND, reply_markup=content_kb.back_menu_keyboard)
+        await call.message.edit_caption(caption=CONTENT_FUNCTIONS_SECOND, reply_markup=content_kb.back_menu_keyboard,
+                                        parse_mode=ParseMode.MARKDOWN)
     elif photo_caption.startswith(CONTENT_FOR_LOOP):
-        await call.message.edit_caption(caption=CONTENT_FOR_lOOP_SECOND, reply_markup=content_kb.back_menu_keyboard)
+        await call.message.edit_caption(caption=CONTENT_FOR_lOOP_SECOND, reply_markup=content_kb.back_menu_keyboard,
+                                        parse_mode=ParseMode.MARKDOWN)
     elif photo_caption.startswith(CONTENT_IF_ELSE):
-        await call.message.edit_caption(caption=CONTENT_IF_ELSE_SECOND, reply_markup=content_kb.back_menu_keyboard)
+        await call.message.edit_caption(caption=CONTENT_IF_ELSE_SECOND, reply_markup=content_kb.back_menu_keyboard,
+                                        parse_mode=ParseMode.MARKDOWN)
 
 
 # Back
 @dp.callback_query_handler(ChatTypeFilter(types.ChatType.PRIVATE), text=BACK_BUTTON, state='*')
 async def show_next(call: types.CallbackQuery, state: FSMContext):
     photo_caption = call.message.caption
-    print(photo_caption)
-    if photo_caption.startswith(CONTENT_WHAT_PYTHON_SECOND):
+    if photo_caption == CONTENT_FUNCTIONS_SECOND.replace('_', '').replace('*', ''):
+        print('trueeee')
+    else:
+        print(photo_caption, CONTENT_FUNCTIONS_SECOND.replace('_', '').replace('*', ''))
+    if photo_caption.startswith(CONTENT_WHAT_PYTHON_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_WHAT_PYTHON}*\n{CONTENT_WHAT_PYTHON_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
-    elif photo_caption.startswith(CONTENT_WHY_PYTHON_SECOND):
+    elif photo_caption.startswith(CONTENT_WHY_PYTHON_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_WHY_PYTHON}*\n{CONTENT_WHY_PYTHON_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
-    elif photo_caption.startswith(CONTENT_INVENTOR_SECOND):
+    elif photo_caption.startswith(CONTENT_INVENTOR_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_INVENTOR}*\n{CONTENT_INVENTOR_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
-    elif photo_caption.startswith(CONTENT_FUNCTIONS_SECOND):
+    elif photo_caption.startswith(CONTENT_FUNCTIONS_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_FUNCTIONS}*\n{CONTENT_FUNCTIONS_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
-    elif photo_caption.startswith(CONTENT_FOR_lOOP_SECOND):
+    elif photo_caption.startswith(CONTENT_FOR_lOOP_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_FOR_LOOP}*\n{CONTENT_FOR_LOOP_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
-    elif photo_caption.startswith(CONTENT_IF_ELSE_SECOND):
+    elif photo_caption.startswith(CONTENT_IF_ELSE_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_IF_ELSE}*\n{CONTENT_IF_ELSE_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
