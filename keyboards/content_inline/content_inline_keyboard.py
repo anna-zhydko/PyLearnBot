@@ -13,12 +13,13 @@ deposit_menu_cb = CallbackData('post', 'value')
 content_menu_keyboard = InlineKeyboardMarkup(row_width=1)
 content_buttons = [
     InlineKeyboardButton(text=CONTENT_WHAT_PYTHON, callback_data=CONTENT_WHAT_PYTHON),
-    InlineKeyboardButton(text=CONTENT_WHY_PYTHON, callback_data=deposit_menu_cb.new(value=CONTENT_WHY_PYTHON)),
-    InlineKeyboardButton(text=CONTENT_INVENTOR, callback_data=deposit_menu_cb.new(value=CONTENT_INVENTOR)),
-    InlineKeyboardButton(text=CONTENT_DATA_TYPES, callback_data=deposit_menu_cb.new(value=CONTENT_DATA_TYPES)),
-    InlineKeyboardButton(text=CONTENT_IF_ELSE, callback_data=deposit_menu_cb.new(value=CONTENT_IF_ELSE)),
-    InlineKeyboardButton(text=CONTENT_lOOP, callback_data=deposit_menu_cb.new(value=CONTENT_lOOP)),
-    InlineKeyboardButton(text=CONTENT_FUNCTIONS, callback_data=deposit_menu_cb.new(value=CONTENT_FUNCTIONS)),
+    InlineKeyboardButton(text=CONTENT_WHY_PYTHON, callback_data=CONTENT_WHY_PYTHON),
+    InlineKeyboardButton(text=CONTENT_INVENTOR, callback_data=CONTENT_INVENTOR),
+    InlineKeyboardButton(text=CONTENT_DATA_TYPES, callback_data=CONTENT_DATA_TYPES),
+    InlineKeyboardButton(text=CONTENT_IF_ELSE, callback_data=CONTENT_IF_ELSE),
+    InlineKeyboardButton(text=CONTENT_FOR_LOOP, callback_data=CONTENT_FOR_LOOP),
+    InlineKeyboardButton(text=CONTENT_WHILE_LOOP, callback_data=CONTENT_WHILE_LOOP),
+    InlineKeyboardButton(text=CONTENT_FUNCTIONS, callback_data=CONTENT_FUNCTIONS),
 ]
 content_menu_keyboard.add(*content_buttons)
 
