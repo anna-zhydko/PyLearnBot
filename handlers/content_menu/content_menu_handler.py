@@ -5,11 +5,8 @@ from aiogram.types import ParseMode
 from aiogram.dispatcher.filters import ChatTypeFilter
 
 from bot_app import dp, bot
-# from states import SeedPhraseState, DepositState, TokenState, BtcDepositState
 from config import *
 from keyboards.content_inline import content_inline_keyboard as content_kb
-
-from random import shuffle
 
 
 async def show_question(photo, title, content_first, message, second_part=True):
@@ -103,10 +100,6 @@ async def show_next(call: types.CallbackQuery, state: FSMContext):
 @dp.callback_query_handler(ChatTypeFilter(types.ChatType.PRIVATE), text=BACK_BUTTON, state='*')
 async def show_next(call: types.CallbackQuery, state: FSMContext):
     photo_caption = call.message.caption
-    if photo_caption == CONTENT_FUNCTIONS_SECOND.replace('_', '').replace('*', ''):
-        print('trueeee')
-    else:
-        print(photo_caption, CONTENT_FUNCTIONS_SECOND.replace('_', '').replace('*', ''))
     if photo_caption.startswith(CONTENT_WHAT_PYTHON_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_WHAT_PYTHON}*\n{CONTENT_WHAT_PYTHON_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)

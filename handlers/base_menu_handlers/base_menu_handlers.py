@@ -21,7 +21,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
 @dp.message_handler(commands=['help'], state='*')
 async def send_help(message: types.Message, state: FSMContext):
     await state.finish()
-    await message.answer(MESSAGE_GREETINGS_PRIVATE)
+    await message.answer(MESSAGE_HELP)
 
 
 # Content
@@ -29,7 +29,7 @@ async def send_help(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals=KEY_BUTTON_CONTENT), state='*')
 async def exchange(message: types.Message, state: FSMContext):
     await state.finish()
-    await message.answer(CONTENT_LIST, reply_markup=content_kb.content_menu_keyboard)
+    await message.answer(CONTENT_LIST, reply_markup=content_kb.content_menu_keyboard,  parse_mode=ParseMode.MARKDOWN)
 
 
 # Author
@@ -37,3 +37,4 @@ async def exchange(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals=KEY_BUTTON_AUTHOR), state='*')
 async def settings_reply(message: types.Message, state: FSMContext):
     await state.finish()
+    await message.answer(ABOUT_AUTHOR)

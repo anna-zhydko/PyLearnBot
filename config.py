@@ -31,7 +31,7 @@ KEY_BUTTON_AUTHOR = emojize(':bust_in_silhouette:') + ' Про автора'
 ABOUT_AUTHOR = 'Бот був створений студенткою курсу ІС-1-3М\nЖидко Анною'
 
 # Content
-CONTENT_LIST = 'Оберіть тему'
+CONTENT_LIST = emojize(':books:') + '*Оберіть урок:*'
 CONTENT_WHY_PYTHON = 'Чому Python?'
 CONTENT_WHAT_PYTHON = 'Що таке Python?'
 CONTENT_INVENTOR = 'Ким був розроблений Python?'
