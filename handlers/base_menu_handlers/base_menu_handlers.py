@@ -9,6 +9,7 @@ from bot_app import dp, bot
 from config import *
 from keyboards.main_menu import main_menu_keyboard as main_kb
 from keyboards.content_inline import content_inline_keyboard as content_kb
+from services.graphbuild import build_graph
 from bot_app import dp, bot
 
 
@@ -38,3 +39,12 @@ async def exchange(message: types.Message, state: FSMContext):
 async def settings_reply(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(ABOUT_AUTHOR)
+
+
+# Graph
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), commands=['function'], state='*')
+@dp.message_handler(Text(equals=KEY_BUTTON_FUNCTION), state='*')
+async def settings_reply(message: types.Message, state: FSMContext):
+    await state.finish()
+    graph_file = await build_graph()
+    await message.answer_photo(photo=graph_file)

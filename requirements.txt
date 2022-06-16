@@ -3,3 +3,5 @@ requests==2.27.1
 emoji==1.7.0
 asyncpg==0.25.0
 python-dotenv==0.19.2
+numpy
+matplotlib
