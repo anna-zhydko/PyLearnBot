@@ -10,6 +10,7 @@ from config import *
 from keyboards.main_menu import main_menu_keyboard as main_kb
 from keyboards.content_inline import content_inline_keyboard as content_kb
 from services.graphbuild import build_graph
+from states import GraphState
 from bot_app import dp, bot
 
 
@@ -46,5 +47,19 @@ async def settings_reply(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals=KEY_BUTTON_FUNCTION), state='*')
 async def settings_reply(message: types.Message, state: FSMContext):
     await state.finish()
-    graph_file = await build_graph()
+    await GraphState.coefficient.set()
+    await message.answer(GRAPH_ENTER_COEFFICIENT, parse_mode=ParseMode.MARKDOWN)
+
+
+# Enter "k" coefficient
+@dp.message_handler(state=GraphState.coefficient)
+async def exchange(message: types.Message, state: FSMContext):
+    await state.finish()
+    # try:
+    coefficient = int(message.text)
+    graph_file = await build_graph(coefficient)
     await message.answer_photo(photo=graph_file)
+    # except:
+    #     await message.answer(GRAPH_WRONG_COEFFICIENT)
+    # finally:
+    #     await state.finish()

@@ -3,15 +3,15 @@ import numpy as np
 from io import BytesIO
 
 
-async def build_graph():
+async def build_graph(k):
     # Creating vectors X and Y
-    x = np.linspace(-2, 2, 100)
-    y = x ** 2
+    x = np.linspace(-50, 50, 1)
+    y = 2 - k
 
     # Write the plot Figure to a file-like bytes object:
     plot_file = BytesIO()
 
-    plt.plot(x, y, linestyle='--', color='k', lw=3, scalex=False, scaley=False)
+    plt.plot(x, y)
 
     plt.savefig(plot_file, format='png')
     plot_file.seek(0)

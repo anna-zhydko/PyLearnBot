@@ -31,6 +31,10 @@ KEY_BUTTON_FUNCTION = emojize(':bust_in_silhouette:') + ' FUNCTION'
 # Author
 ABOUT_AUTHOR = 'Бот був створений студенткою курсу ІС-1-3М\nЖидко Анною'
 
+# Graph
+GRAPH_ENTER_COEFFICIENT = 'Введіть коефцієт _k_ для побудови графіку функції *y = -x + k*'
+GRAPH_WRONG_COEFFICIENT = 'Невірвний коефіцієнт k'
+
 # Content
 CONTENT_LIST = emojize(':books:') + '*Оберіть урок:*'
 CONTENT_WHY_PYTHON = 'Чому Python?'

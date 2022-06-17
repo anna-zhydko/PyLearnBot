@@ -1,5 +1,5 @@
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
-class FAQState(StatesGroup):
-    question = State()
+class GraphState(StatesGroup):
+    coefficient = State()
