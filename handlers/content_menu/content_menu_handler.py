@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.utils.markdown import bold
 from aiogram.dispatcher import FSMContext
-from aiogram.types import ParseMode
+from aiogram.types import ParseMode, ContentType
 from aiogram.dispatcher.filters import ChatTypeFilter
 
 from bot_app import dp, bot
@@ -118,3 +118,10 @@ async def show_next(call: types.CallbackQuery, state: FSMContext):
     elif photo_caption.startswith(CONTENT_IF_ELSE_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_IF_ELSE}*\n{CONTENT_IF_ELSE_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
+
+
+# random message
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), state='*', content_types=ContentType.all())
+async def unknown_message_reply(message: types.Message, state: FSMContext):
+    await state.finish()
+    await message.answer(MESSAGE_UNKNOWN)

@@ -18,7 +18,7 @@ COMMAND_AUTHOR = 'Про автора'
 # Messages
 MESSAGE_GREETINGS_PRIVATE = "Вітаю в Learn.py!\nВчи Python разом з нами"
 MESSAGE_HELP = "Бот призначений для ознайомлення з мовою програмування Python.\nЗавжди з вами."
-MESSAGE_UNKNOWN = 'Натисність /start щоб побачити голвне меню'
+MESSAGE_UNKNOWN = 'Натисність /start щоб побачити головне меню'
 
 # Selected
 SELECTED = 'Selected: \n'

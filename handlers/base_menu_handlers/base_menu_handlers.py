@@ -55,11 +55,10 @@ async def settings_reply(message: types.Message, state: FSMContext):
 @dp.message_handler(state=GraphState.coefficient)
 async def exchange(message: types.Message, state: FSMContext):
     await state.finish()
-    # try:
-    coefficient = int(message.text)
-    graph_file = await build_graph(coefficient)
-    await message.answer_photo(photo=graph_file)
-    # except:
-    #     await message.answer(GRAPH_WRONG_COEFFICIENT)
-    # finally:
-    #     await state.finish()
+    try:
+        coefficient = float(message.text)
+        graph_file = await build_graph(coefficient)
+        await message.answer_photo(photo=graph_file)
+    except:
+        await message.answer(GRAPH_WRONG_COEFFICIENT)
+    await state.finish()
