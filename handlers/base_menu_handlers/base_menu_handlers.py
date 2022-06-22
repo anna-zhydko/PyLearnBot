@@ -11,7 +11,9 @@ from keyboards.main_menu import main_menu_keyboard as main_kb
 from keyboards.content_inline import content_inline_keyboard as content_kb
 from services.graphbuild import build_graph
 from states import GraphState
+from database.sqlite_db import show_expressions
 from bot_app import dp, bot
+import text_to_image
 
 
 @dp.message_handler(commands=['start'], state='*')
@@ -62,3 +64,14 @@ async def exchange(message: types.Message, state: FSMContext):
     except:
         await message.answer(GRAPH_WRONG_COEFFICIENT)
     await state.finish()
+
+
+# Table
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), commands=['regular_expression'], state='*')
+@dp.message_handler(Text(equals=KEY_BUTTON_TABLE), state='*')
+async def settings_reply(message: types.Message, state: FSMContext):
+    encoded_image_path = text_to_image.encode(await show_expressions(), "image.png")
+    import os
+    path = os.path.abspath('image.png')
+    await message.answer_photo(photo=open(path, 'rb'))
+    # await message.answer(f'<pre>{await show_expressions()}</pre>', parse_mode=ParseMode.HTML)

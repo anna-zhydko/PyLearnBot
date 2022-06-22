@@ -5,6 +5,7 @@ from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram import types
 
 from bot_app import dp, bot
+from database import sqlite_db
 from config import *
 import handlers
 
@@ -49,6 +50,7 @@ async def main():
     try:
         await set_default_commands(bot)
         await dp.start_polling()
+        sqlite_db.sql_start()
     finally:
         await dp.storage.close()
         await dp.storage.wait_closed()

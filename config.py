@@ -27,6 +27,7 @@ SELECTED = 'Selected: \n'
 KEY_BUTTON_CONTENT = emojize(':page_with_curl:') + ' Уроки'
 KEY_BUTTON_AUTHOR = emojize(':bust_in_silhouette:') + ' Про автора'
 KEY_BUTTON_FUNCTION = emojize(':bust_in_silhouette:') + ' FUNCTION'
+KEY_BUTTON_TABLE = emojize(':bust_in_silhouette:') + ' TABLE'
 
 # Author
 ABOUT_AUTHOR = 'Бот був створений студенткою курсу ІС-1-3М\nЖидко Анною'
