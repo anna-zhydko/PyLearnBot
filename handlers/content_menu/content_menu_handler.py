@@ -7,6 +7,7 @@ from aiogram.dispatcher.filters import ChatTypeFilter
 from bot_app import dp, bot
 from config import *
 from keyboards.content_inline import content_inline_keyboard as content_kb
+from keyboards.main_menu import main_menu_keyboard as main_kb
 from database.sqlite_db import show_expressions, get_questions1, get_questions2, get_questions3
 from states import RegxState, TestState
 
@@ -162,19 +163,28 @@ async def show_pattern(call: types.CallbackQuery, state: FSMContext):
 # test start
 @dp.callback_query_handler(ChatTypeFilter(types.ChatType.PRIVATE), lambda call: call.data == 'start_test', state='*')
 async def show_pattern(call: types.CallbackQuery, state: FSMContext):
+    # call.telegram_types.Rtypes.ReplyKeyboardRemove()
     await TestState.n_1.set()
-    db_data = await get_questions1()
+    db_data = await get_questions2()
     question_first = db_data[0]
-    await state.update_data(correct=question_first[2], chat_id=call.message.chat.id)
-    await call.message.answer_poll(question=question_first[0],
-                                   options=question_first[1].split('_'),
-                                   is_anonymous=False,
-                                   type='quiz',
-                                   allows_multiple_answers=False,
-                                   explanation='Неправильна відповідь!',
-                                   open_period=6,
-                                   correct_option_id=question_first[2])
+    # await TestState.n_11.set()
+    # await state.update_data(correct=question_first[2], chat_id=call.message.chat.id)
+    # await call.message.answer_poll(question=question_first[0],
+    #                                options=question_first[1].split('_'),
+    #                                is_anonymous=False,
+    #                                type='regular',
+    #                                allows_multiple_answers=True,
+    #                                explanation='Неправильна відповідь!',
+    #                                open_period=6,
+    #                                correct_option_id=question_first[2], reply_markup=None)
+    # await call.message.answer('Вам нараховано 2 бали')
 
+
+# 14 question
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), state=TestState.n_11)
+async def n_11(message: types.Message, state: FSMContext):
+    await message.answer('Вам нараховано один бал')
+    await message.answer('Ваш результат: 7')
 
 @dp.poll_answer_handler()
 async def some_poll_answer_handler(poll_answer: types.PollAnswer):

@@ -26,3 +26,7 @@ class TestState(StatesGroup):
     n_13 = State()
     n_14 = State()
     n_15 = State()
+
+
+class LearnLevelState(StatesGroup):
+    level = State()

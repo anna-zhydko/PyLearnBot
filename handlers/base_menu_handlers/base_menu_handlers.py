@@ -10,8 +10,8 @@ from config import *
 from keyboards.main_menu import main_menu_keyboard as main_kb
 from keyboards.content_inline import content_inline_keyboard as content_kb
 from services.graphbuild import build_graph
-from states import GraphState
-from database.sqlite_db import show_expressions, get_questions1
+from states import GraphState, LearnLevelState
+from database.sqlite_db import show_expressions, get_questions1, user_insert
 from bot_app import dp, bot
 import text_to_image
 
@@ -20,6 +20,20 @@ import text_to_image
 async def send_welcome(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(MESSAGE_GREETINGS_PRIVATE, reply_markup=main_kb.main_keyboard)
+    await LearnLevelState.level.set()
+    await message.answer('Який у вас бажаний рівень знань від 0 до 1?')
+
+
+@dp.message_handler(state=LearnLevelState.level)
+async def level(message: types.Message, state: FSMContext):
+    first_name = message.from_user.first_name if getattr(message.from_user, 'first_name', '') else ''
+    last_name = message.from_user.last_name if getattr(message.from_user, 'last_name', '') else ''
+    fullname = first_name + last_name
+    try:
+        float(message.text)
+        await user_insert(fullname, message.from_user.username, message.from_user.language_code, float(message.text))
+    except ValueError:
+        await message.answer('Невірний тип рівня. Повинно бути дробове число')
 
 
 @dp.message_handler(commands=['help'], state='*')
