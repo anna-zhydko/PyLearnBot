@@ -62,11 +62,11 @@ questions3 = [
 ]
 
 elements = [
-    ('Цикли'),
-    ('Функція'),
-    ('Регулярний вираз'),
-    ('Загальна інформація про Python'),
-    ('Типи даних'),
+    ('Цикли', ),
+    ('Функція', ),
+    ('Регулярний вираз', ),
+    ('Загальна інформація про Python', ),
+    ('Типи даних', )
 ]
 
 
@@ -156,7 +156,7 @@ def sql_start():
     ''')
 
     cur.execute('DELETE FROM LearningElement;')
-    cur.executemany('INSERT INTO LearningElement (name) VALUES (?,)', elements)
+    cur.executemany('INSERT INTO LearningElement (name) VALUES (?)', elements)
 
     base.commit()
 
@@ -194,6 +194,9 @@ async def user_insert(tg_user_id, fullname, username, language, kn_level):
     user = (tg_user_id, fullname, username, language, kn_level)
     cur.execute('DELETE FROM user;')
     cur.execute("INSERT INTO user (tg_user_id, fullname, username, language, kn_level) VALUES (?,?,?,?,?)", user)
+    cur.execute("SELECT * FROM user")
+    mytable = from_db_cursor(cur)
+    print(mytable)
 
 
 def post_level_kn(level, tg_user_id, LearningElement_id):

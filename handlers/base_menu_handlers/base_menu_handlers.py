@@ -31,7 +31,8 @@ async def level(message: types.Message, state: FSMContext):
     fullname = first_name + last_name
     try:
         float(message.text)
-        await user_insert(fullname, message.from_user.username, message.from_user.language_code, float(message.text))
+        await user_insert(message.from_user.id, fullname, message.from_user.username, message.from_user.language_code, float(message.text))
+        await message.answer('Вашу відповідь записано.')
     except ValueError:
         await message.answer('Невірний тип рівня. Повинно бути дробове число')
 
