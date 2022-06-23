@@ -212,20 +212,21 @@ async def some_poll_answer_handler(poll_answer: types.PollAnswer):
     elif await state.get_state() == TestState.n_2.state:
         answer_id = poll_answer.option_ids[0]
         if correct_option == str(answer_id):
-            await TestState.n_3.set()
-            db_data = await get_questions1()
-            question = db_data[2]
             score = state_data.get('score') + 1
             state.update_data(score=score)
-            await bot.send_message(chat_id=chat_id, text='Вам нараховано 1 бал')
-            await bot.send_poll(question=question[0],
-                                options=question[1].split('_'),
-                                is_anonymous=False,
-                                type='quiz',
-                                allows_multiple_answers=False,
-                                explanation='Неправильна відповідь!',
-                                open_period=6,
-                                correct_option_id=question[2])
+        await TestState.n_3.set()
+        db_data = await get_questions1()
+        question = db_data[2]
+
+        await bot.send_message(chat_id=chat_id, text='Вам нараховано 1 бал')
+        await bot.send_poll(question=question[0],
+                            options=question[1].split('_'),
+                            is_anonymous=False,
+                            type='quiz',
+                            allows_multiple_answers=False,
+                            explanation='Неправильна відповідь!',
+                            open_period=6,
+                            correct_option_id=question[2])
 
     elif await state.get_state() == TestState.n_3.state:
         answer_id = poll_answer.option_ids[0]
