@@ -27,7 +27,8 @@ SELECTED = 'Selected: \n'
 KEY_BUTTON_CONTENT = emojize(':page_with_curl:') + ' Уроки'
 KEY_BUTTON_AUTHOR = emojize(':bust_in_silhouette:') + ' Про автора'
 KEY_BUTTON_FUNCTION = emojize(':bar_chart:') + ' Function'
-KEY_BUTTON_REGX = emojize(':pushpin:') + ' Regular Expressions'
+KEY_BUTTON_REGX = emojize(':pushpin:') + ' Регулярні вирази'
+KEY_BUTTON_TEST = emojize(':white_check_mark:') + ' Тестування'
 
 
 # Author

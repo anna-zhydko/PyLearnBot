@@ -11,7 +11,7 @@ from keyboards.main_menu import main_menu_keyboard as main_kb
 from keyboards.content_inline import content_inline_keyboard as content_kb
 from services.graphbuild import build_graph
 from states import GraphState
-from database.sqlite_db import show_expressions
+from database.sqlite_db import show_expressions, get_questions1
 from bot_app import dp, bot
 import text_to_image
 
@@ -26,6 +26,12 @@ async def send_welcome(message: types.Message, state: FSMContext):
 async def send_help(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer(MESSAGE_HELP)
+
+
+@dp.message_handler(commands=['stop_test'], state='*')
+async def send_help(message: types.Message, state: FSMContext):
+    await state.finish()
+    await message.answer('Тест був випадково зупинений')
 
 
 # Content
@@ -71,3 +77,11 @@ async def regex_show(message: types.Message, state: FSMContext):
     await message.answer_photo(photo='https://miro.medium.com/max/1400/0*GU4K0A0TapCLjB07.jpeg',
                                caption=REGX_DESC, reply_markup=content_kb.regx_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
 
+
+# Test
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), commands=['test'], state='*')
+@dp.message_handler(Text(equals=KEY_BUTTON_TEST), state='*')
+async def start_test(message: types.Message, state: FSMContext):
+    await message.answer_photo(photo='https://www.testim.io/blog/test-environment-guide/',
+                               caption='Ви готові почати тестування?\nДля припинення натисність команду */stop_test*',
+                               reply_markup=content_kb.start_test_menu_keyboard, parse_mode=ParseMode.MARKDOWN)

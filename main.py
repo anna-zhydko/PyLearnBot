@@ -49,8 +49,8 @@ async def main():
 
     try:
         await set_default_commands(bot)
-        await dp.start_polling()
         sqlite_db.sql_start()
+        await dp.start_polling()
     finally:
         await dp.storage.close()
         await dp.storage.wait_closed()

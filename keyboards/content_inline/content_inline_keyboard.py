@@ -54,6 +54,14 @@ again_buttons = [
 again_menu_keyboard.add(*again_buttons)
 
 
+# again InlineKeyboard
+start_test_menu_keyboard = InlineKeyboardMarkup(row_width=1)
+start_test_buttons = [
+    InlineKeyboardButton(text='Почати тестування!', callback_data='start_test'),
+]
+start_test_menu_keyboard.add(*start_test_buttons)
+
+
 # Regx InlineKeyboard
 regx_menu_keyboard = InlineKeyboardMarkup(row_width=1)
 regx_buttons = [

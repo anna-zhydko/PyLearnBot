@@ -36,14 +36,38 @@ expressions = [('1', '^', 'Збігається з виразом правору
                         'який знаходиться праворуч від нього.'),
                ]
 
+questions1 = [
+    ('Хто розробив Python?', 'Гвідо ван Россум_Бян Страуструп_Альбер Ейнштейн', '0'),
+    ('Яка з наступних функцій зробить зі строки список?', 'tuple()_list()_int()', '1'),
+    ('Яка типізація даних в Python?', 'динамічна_статична_різна', '1'),
+    ('Оберіть правильний синтаксис', 'a=>1_a=3_a<=4', '2'),
+    ('На честь кого/чого був назван Python?', 'Змії_Псевдоним розробника_Британське_шоу', '0'),
+]
+
+questions2 = [
+    ('На яких платформах використовується Python?', 'Linux_Mac_Windows_Raspberry_Pi', '0_1_2_3_4'),
+    ('Яка з наступних функцій зробить зі строки список?', 'tuple()_list()_int()', '1'),
+    ('Оберіть правильні типи даних в Python', 'double_float_int_char_string', '1_2_4'),
+    ('Оберіть оператори циклу в Python', 'for_if_while_dict', '1_2'),
+    ('Що являється частиною функції?', 'тіло функції_параметр_аргумент', '0_1_2'),
+]
+
+
+questions3 = [
+    ('Яке ключове слово для визначення функції?', 'def'),
+    ('За допомогою якого оператора можна зупинити цикл?', 'break'),
+    ('За допомогою якого оператора можна зупинити\nпоточну і перейти до наступної ітерації?', 'continue'),
+    ('Напишіть назву функції, яка дозволяє переглянути\nнабір коду певну кількість раз в циклі', 'range'),
+    ('Який оператор в регулярних виразах відповідає\nбудь-якому симовлу, окрім обмежувачів рядка ', '.'),
+]
+
+
 base = sq.connect('pylearn.db')
 cur = base.cursor()
 
 
 def sql_start():
-    # global base, cur
-    # base = sq.connect('pylearn.db')
-    # cur = base.cursor()
+
     if base:
         print('Data base connected OK')
     else:
@@ -56,17 +80,37 @@ def sql_start():
         character TEXT,
         description TEXT)
     ''')
+
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS question1(
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        option TEXT,
+        correct TEXT)
+    ''')
+    cur.execute('DELETE FROM question1;')
+    cur.executemany('INSERT INTO question1 (name, option, correct) VALUES (?,?,?)', questions1)
+
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS question2(
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        option TEXT,
+        correct TEXT)
+    ''')
+    cur.execute('DELETE FROM question2;')
+    cur.executemany('INSERT INTO question2 (name, option, correct) VALUES (?,?,?)', questions2)
+
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS question3(
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        correct TEXT)
+    ''')
+    cur.execute('DELETE FROM question3;')
+    cur.executemany('INSERT INTO question3 (name, correct) VALUES (?,?,?)', questions3)
+
     base.commit()
-
-    # cur.execute('DELETE FROM expression1;')
-    # base.commit()
-
-    cur.execute("SELECT * FROM expression1")
-    for row in cur.fetchall():
-        print(row)
-
-    # cur.executemany('INSERT INTO expression1 (number, character, description) VALUES (?,?,?)', expressions)
-    # base.commit()
 
 
 async def show_expressions():
@@ -81,3 +125,18 @@ async def show_expressions():
     # im.show()
     im.save("table.png", transparancy=0)
     # return mytable.get_string()
+
+
+async def get_questions1():
+    cur.execute("SELECT name, option, correct FROM question1")
+    return cur.fetchall()
+
+
+async def get_questions2():
+    cur.execute("SELECT name, option, correct FROM question2")
+    return cur.fetchall()
+
+
+async def get_questions3():
+    cur.execute("SELECT name, option, correct FROM question3")
+    return cur.fetchall()
