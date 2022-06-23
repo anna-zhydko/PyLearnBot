@@ -26,8 +26,9 @@ SELECTED = 'Selected: \n'
 # Main Menu ReplyKeyboard
 KEY_BUTTON_CONTENT = emojize(':page_with_curl:') + ' Уроки'
 KEY_BUTTON_AUTHOR = emojize(':bust_in_silhouette:') + ' Про автора'
-KEY_BUTTON_FUNCTION = emojize(':bust_in_silhouette:') + ' FUNCTION'
-KEY_BUTTON_TABLE = emojize(':bust_in_silhouette:') + ' TABLE'
+KEY_BUTTON_FUNCTION = emojize(':bar_chart:') + ' Function'
+KEY_BUTTON_REGX = emojize(':pushpin:') + ' Regular Expressions'
+
 
 # Author
 ABOUT_AUTHOR = 'Бот був створений студенткою курсу ІС-1-3М\nЖидко Анною'
@@ -126,6 +127,11 @@ CONTENT_FUNCTIONS_SECOND = 'Інформація може передаватис
                            '_def myFunction(fname):\n    print(fname + " Refsnes")_\n_myFunction("Email")_\n\nЗ точки зору функції:\n\n' \
                            '_Параметр_ — це змінна, зазначена в дужках у визначенні функції.\n\n' \
                            '_Аргумент_ — це значення, яке надсилається функції під час її виклику. '
+
+REGX_DESC = '*Регулярні вирази* — це послідовність символів для пошуку відповідності шаблону.\n\n' \
+            'Вони є екземплярами регулярної мови та широко застосовуються для парсингу тексту або\nвалідації вхідних рядків.\n\n' \
+            'Подайте листок картону, в якому вирізані певні фігури. І тільки фігури, які точнісінько відповідають вирізам,\n' \
+            'зможуть через них пройти. У разі лист картону аналогічний рядку регулярного висловлювання.'
 
 
 # Navigate buttons

@@ -56,22 +56,18 @@ async def settings_reply(message: types.Message, state: FSMContext):
 # Enter "k" coefficient
 @dp.message_handler(state=GraphState.coefficient)
 async def exchange(message: types.Message, state: FSMContext):
-    await state.finish()
     try:
         coefficient = float(message.text)
         graph_file = await build_graph(coefficient)
         await message.answer_photo(photo=graph_file)
     except:
-        await message.answer(GRAPH_WRONG_COEFFICIENT)
-    await state.finish()
+        await message.answer(GRAPH_WRONG_COEFFICIENT, reply_markup=content_kb.close_menu_keyboard)
 
 
-# Table
+# Regex
 @dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), commands=['regular_expression'], state='*')
-@dp.message_handler(Text(equals=KEY_BUTTON_TABLE), state='*')
-async def settings_reply(message: types.Message, state: FSMContext):
-    encoded_image_path = text_to_image.encode(await show_expressions(), "image.png")
-    import os
-    path = os.path.abspath('image.png')
-    await message.answer_photo(photo=open(path, 'rb'))
-    # await message.answer(f'<pre>{await show_expressions()}</pre>', parse_mode=ParseMode.HTML)
+@dp.message_handler(Text(equals=KEY_BUTTON_REGX), state='*')
+async def regex_show(message: types.Message, state: FSMContext):
+    await message.answer_photo(photo='https://miro.medium.com/max/1400/0*GU4K0A0TapCLjB07.jpeg',
+                               caption=REGX_DESC, reply_markup=content_kb.regx_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
+

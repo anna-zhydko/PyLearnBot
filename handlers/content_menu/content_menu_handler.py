@@ -7,6 +7,11 @@ from aiogram.dispatcher.filters import ChatTypeFilter
 from bot_app import dp, bot
 from config import *
 from keyboards.content_inline import content_inline_keyboard as content_kb
+from database.sqlite_db import show_expressions
+from states import RegxState
+
+import os
+import re
 
 
 async def show_question(photo, title, content_first, message, second_part=True):
@@ -118,6 +123,40 @@ async def show_next(call: types.CallbackQuery, state: FSMContext):
     elif photo_caption.startswith(CONTENT_IF_ELSE_SECOND.replace('_', '').replace('*', '')):
         await call.message.edit_caption(caption=f'*{CONTENT_IF_ELSE}*\n{CONTENT_IF_ELSE_FIRST}',
                                         reply_markup=content_kb.next_menu_keyboard, parse_mode=ParseMode.MARKDOWN)
+
+
+# regx online
+@dp.callback_query_handler(ChatTypeFilter(types.ChatType.PRIVATE), lambda call: call.data == 'regx_online', state='*')
+async def show_regx(call: types.CallbackQuery, state: FSMContext):
+    await RegxState.pattern.set()
+    await call.message.answer('Введіть шаблон регулярного виразу\nнаприклад *(?<=-)\w+*:', parse_mode=ParseMode.MARKDOWN)
+
+
+# get pattern regx
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), state=RegxState.pattern)
+async def get_pattern(message: types.Message, state: FSMContext):
+    await state.update_data(pattern=message.text)
+    await RegxState.string.set()
+    await message.answer('Введіть строку:')
+
+
+# get pattern string
+@dp.message_handler(ChatTypeFilter(types.ChatType.PRIVATE), state=RegxState.string)
+async def get_string(message: types.Message, state: FSMContext):
+    state_data = await state.get_data()
+    pattern = state_data.get('pattern')
+    match_obj = re.search(r'{}'.format(pattern), message.text)
+    match = match_obj.group(0)
+    await message.answer(f'Співпадіння:\n{match}', reply_markup=content_kb.again_menu_keyboard)
+    await state.finish()
+
+
+# Pattern
+@dp.callback_query_handler(ChatTypeFilter(types.ChatType.PRIVATE), lambda call: call.data == 'pattern', state='*')
+async def show_pattern(call: types.CallbackQuery, state: FSMContext):
+    await show_expressions()
+    path = os.path.abspath('table.png')
+    await call.message.answer_photo(photo=open(path, 'rb'), reply_markup=content_kb.back_menu_keyboard)
 
 
 # random message

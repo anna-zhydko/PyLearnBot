@@ -36,3 +36,28 @@ back_buttons = [
     InlineKeyboardButton(text=BACK_BUTTON, callback_data=BACK_BUTTON),
 ]
 back_menu_keyboard.add(*back_buttons)
+
+
+# Close InlineKeyboard
+close_menu_keyboard = InlineKeyboardMarkup(row_width=1)
+close_buttons = [
+    InlineKeyboardButton(text='Стоп', callback_data='Close'),
+]
+close_menu_keyboard.add(*close_buttons)
+
+
+# again InlineKeyboard
+again_menu_keyboard = InlineKeyboardMarkup(row_width=1)
+again_buttons = [
+    InlineKeyboardButton(text='Знов', callback_data='again'),
+]
+again_menu_keyboard.add(*again_buttons)
+
+
+# Regx InlineKeyboard
+regx_menu_keyboard = InlineKeyboardMarkup(row_width=1)
+regx_buttons = [
+    InlineKeyboardButton(text='Шаблони', callback_data='pattern'),
+    InlineKeyboardButton(text='Регулярні вирази online', callback_data='regx_online'),
+]
+regx_menu_keyboard.add(*regx_buttons)
