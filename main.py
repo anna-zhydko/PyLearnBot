@@ -8,6 +8,9 @@ from bot_app import dp, bot
 from database import sqlite_db
 from config import *
 import handlers
+from aiogram import Bot, Dispatcher, executor, types
+from database.sqlite_db import show_expressions, get_questions1, get_questions2, get_questions3
+from states import TestState
 
 
 from services.set_commands import set_default_commands
@@ -27,6 +30,16 @@ class StatMiddleware(BaseMiddleware):
     async def on_process_update(self, update: types.Update, data: dict):
         if not update.message or update.message.chat.type == types.chat.ChatType.PRIVATE:
             await remove_inline_markup(bot, update.message)
+
+    async def on_process_message(self, message: types.Message, data: dict):
+        dispatcher = Dispatcher.get_current()
+        if dispatcher.current_state() == TestState:
+            import random
+            await asyncio.sleep(random.randint(3, 6))
+            one = await get_questions1()[:3]
+            two = await get_questions2()[:3]
+            three = await get_questions3()[:3]
+            await message.answer(''.join(one) + ''.join(two) + ''.join(three))
 
 
 dp.middleware.setup(ThrottlingMiddleware())
